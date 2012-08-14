@@ -1,0 +1,5 @@
+<h1>Add a new URL and grab a screenshot</h1>
+
+[% form.render %]
+
+

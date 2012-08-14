@@ -3,7 +3,8 @@ use Moose;
 use namespace::autoclean;
 use 5.010;
 
-use Log::Any qw($log);
+use HTML::FormHandler::Model::DBIC;
+
 BEGIN { extends 'Catalyst::Controller' }
 __PACKAGE__->config( namespace => '' );
 

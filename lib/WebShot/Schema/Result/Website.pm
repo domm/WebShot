@@ -22,10 +22,11 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->add_unique_constraint("url_unique", ["url"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-08-14 17:04:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eiTk2omerjBOrfKN1H5/fQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-08-14 22:06:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:fqDiTgFspOLQ/O2kCX6Dvw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
