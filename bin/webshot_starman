@@ -1,0 +1,5 @@
+#!/bin/sh
+
+BASEDIR=$(dirname $0)
+
+plackup -r -p 3000 -s Starman $BASEDIR/../bin/webshot.psgi
