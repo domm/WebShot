@@ -13,12 +13,10 @@ use WebShot::Web;
 my $app = 'WebShot::Web'->psgi_app;
 builder {
     mount '/static' => builder {
-        enable "NullLogger";
         enable "Plack::Middleware::Static",
             path => sub {1},
             root => "$FindBin::Bin/../root/static";
     };
-
     mount '/' => builder { $app };
 };
 

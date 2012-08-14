@@ -2,4 +2,4 @@
 
 BASEDIR=$(dirname $0)
 
-plackup -r -p 3000 -s Starman $BASEDIR/../bin/webshot.psgi
+plackup -r -p 3000 -s Starman --access-log /dev/null $BASEDIR/../bin/webshot.psgi
