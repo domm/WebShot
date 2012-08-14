@@ -1,0 +1,4 @@
+<h3>Here's your screenshot for: [% item.url %]</h1>
+
+<img src="/static/shots/[% item.image %]"/>
+

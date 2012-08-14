@@ -3,7 +3,8 @@ use Moose;
 use namespace::autoclean;
 use 5.010;
 
-use HTML::FormHandler;
+use WebShot::Web::Form::Website;
+use WebShot::Screenshot;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -12,25 +13,25 @@ sub base : Chained('/') PathPart('website') CaptureArgs(0) { }
 sub add : Chained('base') Args(0) {
     my ( $self, $c ) = @_;
 
-    my $form = $c->stash->{form} = HTML::FormHandler->new(
-        field_list=> [
-            url => { type=>'Text', required=>1, apply=>[ {
-                check => qr|^https?://|,
-                message => "doesn't look like a url",
-            }] },
-            submit => 'Submit',
-        ]
-    );
+    my $form = $c->stash->{form} = WebShot::Web::Form::Website->new();
 
     if ( $form->process(
         action => $c->req->uri,
         params => $c->req->params,
     )) {
-        warn "FORM PROCESSED";
-        
+        my $url = $form->field('url')->value;
+
+        my $screenshot = WebShot::Screenshot->new(
+            root => $c->path_to(qw(root static shots)),
+            url => $url,
+        );
+        $screenshot->take_a_shot;
+
         my $website = $c->model('DB::Website')->create({
-            url => $form->field('url')->value,
+            url => $url,
+            image => $screenshot->image,
         });
+
         $c->res->redirect($c->uri_for($c->controller->action_for('show'),[$website->id]));
         return 0;
     }
@@ -44,7 +45,6 @@ sub load : Chained('base') CaptureArgs(1) PathPart('') {
 
 sub show : Chained('load') Args(0) {
     my ( $self, $c ) = @_;
-    $c->res->body("show " . $c->stash->{item});
 }
 
 __PACKAGE__->meta->make_immutable;

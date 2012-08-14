@@ -8,6 +8,7 @@ our $VERSION = '1.000';
 use Catalyst qw/
     ConfigLoader
     Unicode::Encoding
+    Static::Simple
 /;
 
 __PACKAGE__->config( 'Plugin::ConfigLoader' => { file => 'webshot.pl' } );

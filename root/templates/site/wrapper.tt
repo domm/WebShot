@@ -3,10 +3,18 @@
   <head>
     <link href="/webshot.css" rel="stylesheet" type="text/css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="/static/style.css" rel="stylesheet" type="text/css" />
     <title>WebShot [% title %]</title>
   </head>
 
   <body>
+  <ul class="nav">
+    <li>Grab screenshots of websites</li>
+    <li><a href="/website/add">Add</a></li>
+    <li><a href="/website/list">List</a></li>
+    <li><a href="/website/mosaic">Mosaic</a></li>
+  </ul>
+
 [% content  %]
   </body>
 </html>
