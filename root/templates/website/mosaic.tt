@@ -1,0 +1,10 @@
+<h1>The mosaic!</h1>
+
+[% IF list.count %]
+[% WHILE (item = list.next) %]
+<a href="[% c.uri_for(c.controller('Website').action_for('show'),[ item.id ]) %]"><img src="/static/thumbnails/[% item.image %]"/></a>
+[% END %]
+[% ELSE %]
+<p>No screenshot tumbnailed yet.</p>
+[% END %]
+

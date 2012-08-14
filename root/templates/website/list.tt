@@ -1,0 +1,14 @@
+<h1>List of stored websites</h1>
+
+[% IF list.count %]
+<p>We have [% list.count %] websites!</p>
+
+<ul>
+[% WHILE (item = list.next) %]
+<li><a href="[% c.uri_for(c.controller('Website').action_for('show'),[ item.id ]) %]">[% item.url %]</a></li>
+[% END %]
+</ul>
+[% ELSE %]
+<p>No website screenshot yet. Please add one!</p>
+[% END %]
+

@@ -37,6 +37,18 @@ sub add : Chained('base') Args(0) {
     }
 }
 
+sub list : Chained('base') Args(0) {
+    my ( $self, $c ) = @_;
+    $c->stash->{list} = $c->model('DB::Website')->search_rs( {}, { order_by=>'id desc' });
+}
+
+sub mosaic : Chained('base') Args(0) {
+    my ( $self, $c ) = @_;
+    $c->stash->{list} = $c->model('DB::Website')->search_rs( {
+        processed=>1,
+    }, { order_by=>'id desc' });
+}
+
 sub load : Chained('base') CaptureArgs(1) PathPart('') {
     my ( $self, $c, $id ) = @_;
     $c->stash->{item} = $c->model('DB::Website')->find($id);
