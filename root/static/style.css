@@ -17,3 +17,14 @@ ul.nav li:before {
 ul.nav li:first-child:before {
  content: '';
 }
+
+span.mosaic {
+    padding:0px;
+    margin:0px;
+    border:0px;
+    float:left;
+}
+
+span img {
+    vertical-align:bottom;
+}

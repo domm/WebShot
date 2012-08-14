@@ -2,7 +2,7 @@
 
 [% IF list.count %]
 [% WHILE (item = list.next) %]
-<a href="[% c.uri_for(c.controller('Website').action_for('show'),[ item.id ]) %]"><img src="/static/thumbnails/[% item.image %]"/></a>
+<span class="mosaic"><a href="[% c.uri_for(c.controller('Website').action_for('show'),[ item.id ]) %]"><img src="/static/thumbnails/[% item.image %]" border="0"/ alt="[% item.url %]"></a></span>
 [% END %]
 [% ELSE %]
 <p>No screenshot tumbnailed yet.</p>
