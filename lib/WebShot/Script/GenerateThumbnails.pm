@@ -1,9 +1,9 @@
 package WebShot::Script::GenerateThumbnails;
 use Moose;
-with qw(MooseX::Getopt);
 use MooseX::Types::Path::Class;
 use WebShot::Schema;
 use WebShot::Thumbnail;
+with qw(MooseX::Getopt);
 
 has 'root' =>
   ( is => 'ro', isa => 'Path::Class::Dir', coerce => 1, required => 1 );
