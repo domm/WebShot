@@ -3,6 +3,18 @@ use Moose;
 use MooseX::Types::Path::Class;
 use WebShot::Schema;
 use WebShot::Thumbnail;
+use Log::Any::Adapter;
+use Log::Dispatch;
+my $log = Log::Dispatch->new( outputs => [
+    [ 'File',
+      filename  => '/var/log/webshot/generate_thumbnails.log',
+      min_level => 'debug',
+      newline   => 1,
+      mode      => 'append',
+    ],
+]);
+Log::Any::Adapter->set( 'Dispatch', dispatcher => $log );
+
 with qw(MooseX::Getopt);
 
 has 'root' =>
