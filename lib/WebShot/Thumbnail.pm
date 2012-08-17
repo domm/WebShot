@@ -29,7 +29,7 @@ sub thumbnail_item {
         $item->update( { processed => 1 } );
         $log->infof(
             "Thumbnailed image >%i< from %s to %s",
-            $item->id, $src, $target
+            $item->id, $src->stringify, $target->stringify
         );
     }
     catch {
