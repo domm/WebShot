@@ -5,6 +5,7 @@ use 5.010;
 
 use WebShot::Web::Form::Website;
 use WebShot::Screenshot;
+use Try::Tiny;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -19,21 +20,26 @@ sub add : Chained('base') Args(0) {
         action => $c->req->uri,
         params => $c->req->params,
     )) {
-        my $url = $form->field('url')->value;
+        try {
+            my $url = $form->field('url')->value;
 
-        my $screenshot = WebShot::Screenshot->new(
-            root => $c->path_to(qw(root static shots)),
-            url => $url,
-        );
-        $screenshot->take_a_shot;
+            my $screenshot = WebShot::Screenshot->new(
+                root => $c->path_to(qw(root static shots)),
+                url => $url,
+            );
+            $screenshot->take_a_shot;
 
-        my $website = $c->model('DB::Website')->create({
-            url => $url,
-            image => $screenshot->image,
-        });
+            my $website = $c->model('DB::Website')->create({
+                url => $url,
+                image => $screenshot->image,
+            });
 
-        $c->res->redirect($c->uri_for($c->controller->action_for('show'),[$website->id]));
-        return 0;
+            $c->res->redirect($c->uri_for($c->controller->action_for('show'),[$website->id]));
+            return 0;
+        }
+        catch {
+            die "Error while storing site & grabbing shot: $_";
+        }
     }
 }
 
