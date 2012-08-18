@@ -22,17 +22,20 @@ sub add : Chained('base') Args(0) {
     )) {
         try {
             my $url = $form->field('url')->value;
+            $c->log->info("Got URL >$url< from user");
 
             my $screenshot = WebShot::Screenshot->new(
                 root => $c->path_to(qw(root static shots)),
                 url => $url,
             );
             $screenshot->take_a_shot;
+            $c->log->info("Took the screenshot for >$url<");
 
             my $website = $c->model('DB::Website')->create({
                 url => $url,
                 image => $screenshot->image,
             });
+            $c->log->info("Stored >$url< in DB with id >".$website->id."<");
 
             $c->res->redirect($c->uri_for($c->controller->action_for('show'),[$website->id]));
             return 0;
