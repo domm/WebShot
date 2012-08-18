@@ -17,3 +17,14 @@ extends 'Catalyst';
 
 __PACKAGE__->setup();
 
+use Log::Dispatch;
+my $log = Log::Dispatch->new( outputs => [
+    [ 'File',
+      filename  => '/var/log/webshot.log',
+      min_level => 'debug',
+      newline   => 1,
+      mode      => 'append',
+    ],
+]);
+__PACKAGE__->log($log);
+
