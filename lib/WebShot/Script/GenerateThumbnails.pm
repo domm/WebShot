@@ -7,7 +7,7 @@ use Log::Any::Adapter;
 use Log::Dispatch;
 my $log = Log::Dispatch->new( outputs => [
     [ 'File',
-      filename  => '/var/log/webshot/generate_thumbnails.log',
+      filename  => '/var/log/webshot.log',
       min_level => 'debug',
       newline   => 1,
       mode      => 'append',
