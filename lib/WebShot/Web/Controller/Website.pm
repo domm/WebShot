@@ -6,6 +6,17 @@ use 5.010;
 use WebShot::Web::Form::Website;
 use WebShot::Screenshot;
 use Try::Tiny;
+use Log::Any::Adapter;
+use Log::Dispatch;
+my $log = Log::Dispatch->new( outputs => [
+    [ 'File',
+      filename  => '/var/log/webshot.log',
+      min_level => 'debug',
+      newline   => 1,
+      mode      => 'append',
+    ],
+]);
+Log::Any::Adapter->set( 'Dispatch', dispatcher => $log );
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -22,20 +33,20 @@ sub add : Chained('base') Args(0) {
     )) {
         try {
             my $url = $form->field('url')->value;
-            $c->log->info("Got URL >$url< from user");
+            $log->info("Got URL >$url< from user");
 
             my $screenshot = WebShot::Screenshot->new(
                 root => $c->path_to(qw(root static shots)),
                 url => $url,
             );
             $screenshot->take_a_shot;
-            $c->log->info("Took the screenshot for >$url<");
+            $log->info("Took the screenshot for >$url<");
 
             my $website = $c->model('DB::Website')->create({
                 url => $url,
                 image => $screenshot->image,
             });
-            $c->log->info("Stored >$url< in DB with id >".$website->id."<");
+            $log->info("Stored >$url< in DB with id >".$website->id."<");
 
             $c->res->redirect($c->uri_for($c->controller->action_for('show'),[$website->id]));
             return 0;
