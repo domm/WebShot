@@ -6,17 +6,8 @@ use 5.010;
 use WebShot::Web::Form::Website;
 use WebShot::Screenshot;
 use Try::Tiny;
-use Log::Any::Adapter;
-use Log::Dispatch;
-my $log = Log::Dispatch->new( outputs => [
-    [ 'File',
-      filename  => '/var/log/webshot.log',
-      min_level => 'debug',
-      newline   => 1,
-      mode      => 'append',
-    ],
-]);
-Log::Any::Adapter->set( 'Dispatch', dispatcher => $log );
+use WebShot::InitLogger;
+use Log::Any qw($log);
 
 BEGIN { extends 'Catalyst::Controller' }
 
