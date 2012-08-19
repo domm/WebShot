@@ -4,15 +4,8 @@ use warnings;
 use 5.010;
 
 use Log::Any::Adapter;
-use Log::Dispatch;
-my $log = Log::Dispatch->new( outputs => [
-    [ 'File',
-      filename  => '/var/log/webshot.log',
-      min_level => 'debug',
-      newline   => 1,
-      mode      => 'append',
-    ],
-]);
-Log::Any::Adapter->set( 'Dispatch', dispatcher => $log );
+use Log::Log4perl;
+Log::Log4perl::init('/home/domm/perl/talks/logging/WebShot/log4perl.conf');
+Log::Any::Adapter->set('Log::Log4perl');
 
 1;
