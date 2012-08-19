@@ -7,7 +7,10 @@ use IO::Interactive qw(is_interactive);
 use Log::Any::Adapter;
 use Log::Log4perl;
 
-if ( is_interactive() ) {
+if ( $ENV{HARNESS_ACTIVE} ) {
+    Log::Any::Adapter->set( 'Test' );
+}
+elsif ( is_interactive() ) {
     Log::Log4perl::init(
       '/home/domm/perl/talks/logging/WebShot/log4perl.conf'
     );
