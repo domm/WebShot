@@ -33,12 +33,10 @@ sub add : Chained('base') Args(0) {
             $screenshot->take_a_shot;
             $log->info("Took the screenshot for >$url<");
 
-            $c->model('DB')->schema->storage->debug(1);
             my $website = $c->model('DB::Website')->create({
                 url => $url,
                 image => $screenshot->image,
             });
-            $c->model('DB')->schema->storage->debug(0);
             $log->info("Stored >$url< in DB with id >".$website->id."<");
 
             $c->res->redirect($c->uri_for($c->controller->action_for('show'),[$website->id]));
